@@ -14,7 +14,8 @@ protocol RoleSelectionModuleModelPresenterInput: AnyObject {
 
 // MARK: - RoleSelectionModuleModel
 final class RoleSelectionModuleModel {
-    
+    // MARK: - Properties
+    weak var presenter: RoleSelectionModulePresenterModelInput?
 }
 
 // MARK: - RoleSelectionModuleModelPresenterInput
