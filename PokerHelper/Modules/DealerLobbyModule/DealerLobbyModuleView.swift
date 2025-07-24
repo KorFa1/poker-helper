@@ -15,6 +15,11 @@ protocol DealerLobbyModuleViewPresenterInput: AnyObject {
 
 // MARK: - DealerLobbyModuleView
 final class DealerLobbyModuleView: UIViewController {
+    // MARK: - Constants
+
+    // MARK: - Properties
+    var presenter: DealerLobbyModulePresenterViewInput?
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()

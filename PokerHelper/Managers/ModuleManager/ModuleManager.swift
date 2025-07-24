@@ -21,12 +21,12 @@ protocol ModuleManagerPlayerEnterNameModulePresenterInput: AnyObject {
     func createPlayerConnectionModule() -> UIViewController
 }
 
-protocol ModuleManagerPlayerConnectionModulePresenterInput: AnyObject {
-    func createPlayerGameModule() -> UIViewController
-}
-
 protocol ModuleManagerDealerValidationModulePresenterInput: AnyObject {
     func createDealerLobbyModule() -> UIViewController
+}
+
+protocol ModuleManagerPlayerConnectionModulePresenterInput: AnyObject {
+    func createPlayerGameModule() -> UIViewController
 }
 
 protocol ModuleManagerDealerLobbyModulePresenterInput: AnyObject {
@@ -36,7 +36,8 @@ protocol ModuleManagerDealerLobbyModulePresenterInput: AnyObject {
 // MARK: - ModuleManager
 final class ModuleManager {
     // MARK: - Properties
-    private let dataManager: DataManagerPlayerEnterNameModuleModelInput = DataManager()
+    private let dataManager: DataManagerPlayerEnterNameModuleModelInput & DataManagerPlayerConnectionModuleModelInput & DataManagerDealerLobbyModuleModelInput = DataManager()
+    private let connectionManager: ConnectionManagerPlayerConnectionModuleModelInput & ConnectionManagerPlayerGameModuleModelInput & ConnectionManagerDealerLobbyModuleModelInput & ConnectionManagerDealerGameModuleModelInput = ConnectionManager()
 }
 
 // MARK: - ModuleManagerSceneDelegateInput
@@ -84,9 +85,32 @@ extension ModuleManager: ModuleManagerRoleSelectionModulePresenterInput {
 // MARK: - ModuleManagerPlayerEnterNameModulePresenterInput
 extension ModuleManager: ModuleManagerPlayerEnterNameModulePresenterInput {
     func createPlayerConnectionModule() -> UIViewController {
+        let playerConnectionModuleModel: PlayerConnectionModuleModelPresenterInput = PlayerConnectionModuleModel()
         let playerConnectionModuleView: PlayerConnectionModuleViewPresenterInput = PlayerConnectionModuleView()
+        let playerConnectionModulePresenter: PlayerConnectionModulePresenterModelInput & PlayerConnectionModulePresenterViewInput = PlayerConnectionModulePresenter(model: playerConnectionModuleModel, view: playerConnectionModuleView, moduleManager: self)
+        
+        (playerConnectionModuleModel as! PlayerConnectionModuleModel).presenter = playerConnectionModulePresenter
+        (playerConnectionModuleModel as! PlayerConnectionModuleModel).dataManager = dataManager
+        (playerConnectionModuleModel as! PlayerConnectionModuleModel).connectionManager = connectionManager
+        (playerConnectionModuleView as! PlayerConnectionModuleView).presenter = playerConnectionModulePresenter
         
         return playerConnectionModuleView as! UIViewController
+    }
+}
+
+// MARK: - ModuleManagerDealerValidationModulePresenterInput
+extension ModuleManager: ModuleManagerDealerValidationModulePresenterInput {
+    func createDealerLobbyModule() -> UIViewController {
+        let dealerLobbyModuleModel: DealerLobbyModuleModelPresenterInput = DealerLobbyModuleModel()
+        let dealerLobbyModuleView: DealerLobbyModuleViewPresenterInput = DealerLobbyModuleView()
+        let dealerLobbyModulePresenter: DealerLobbyModulePresenterModelInput & DealerLobbyModulePresenterViewInput = DealerLobbyModulePresenter(model: dealerLobbyModuleModel, view: dealerLobbyModuleView, moduleManager: self)
+        
+        (dealerLobbyModuleModel as! DealerLobbyModuleModel).presenter = dealerLobbyModulePresenter
+        (dealerLobbyModuleModel as! DealerLobbyModuleModel).dataManager = dataManager
+        (dealerLobbyModuleModel as! DealerLobbyModuleModel).connectionManager = connectionManager
+        (dealerLobbyModuleView as! DealerLobbyModuleView).presenter = dealerLobbyModulePresenter
+        
+        return dealerLobbyModuleView as! UIViewController
     }
 }
 
@@ -96,15 +120,6 @@ extension ModuleManager: ModuleManagerPlayerConnectionModulePresenterInput {
         let playerGameModuleView: PlayerGameModuleViewPresenterInput = PlayerGameModuleView()
         
         return playerGameModuleView as! UIViewController
-    }
-}
-
-// MARK: - ModuleManagerDealerValidationModulePresenterInput
-extension ModuleManager: ModuleManagerDealerValidationModulePresenterInput {
-    func createDealerLobbyModule() -> UIViewController {
-        let dealerLobbyModuleView: DealerLobbyModuleViewPresenterInput = DealerLobbyModuleView()
-        
-        return dealerLobbyModuleView as! UIViewController
     }
 }
 

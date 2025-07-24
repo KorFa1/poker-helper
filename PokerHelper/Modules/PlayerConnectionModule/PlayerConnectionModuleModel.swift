@@ -14,7 +14,10 @@ protocol PlayerConnectionModuleModelPresenterInput: AnyObject {
 
 // MARK: - PlayerConnectionModuleModel
 final class PlayerConnectionModuleModel {
-    
+    // MARK: - Properties
+    weak var presenter: PlayerConnectionModulePresenterModelInput?
+    var dataManager: DataManagerPlayerConnectionModuleModelInput?
+    var connectionManager: ConnectionManagerPlayerConnectionModuleModelInput?
 }
 
 // MARK: - PlayerConnectionModuleModelPresenterInput

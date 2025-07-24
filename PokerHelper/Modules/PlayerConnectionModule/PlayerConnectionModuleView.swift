@@ -15,6 +15,11 @@ protocol PlayerConnectionModuleViewPresenterInput: AnyObject {
 
 // MARK: - PlayerConnectionModuleView
 final class PlayerConnectionModuleView: UIViewController {
+    // MARK: - Constants
+
+    // MARK: - Properties
+    var presenter: PlayerConnectionModulePresenterViewInput?
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()

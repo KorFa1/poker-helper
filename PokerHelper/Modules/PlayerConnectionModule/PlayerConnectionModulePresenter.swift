@@ -18,7 +18,17 @@ protocol PlayerConnectionModulePresenterViewInput: AnyObject {
 
 // MARK: - PlayerConnectionModulePresenter
 final class PlayerConnectionModulePresenter {
+    // MARK: - Properties
+    var model: PlayerConnectionModuleModelPresenterInput?
+    weak var view: PlayerConnectionModuleViewPresenterInput?
+    var moduleManager: ModuleManagerPlayerConnectionModulePresenterInput?
     
+    // MARK: - Init
+    init(model: PlayerConnectionModuleModelPresenterInput, view: PlayerConnectionModuleViewPresenterInput, moduleManager: ModuleManagerPlayerConnectionModulePresenterInput) {
+        self.model = model
+        self.view = view
+        self.moduleManager = moduleManager
+    }
 }
 
 // MARK: - PlayerConnectionModulePresenterModelInput

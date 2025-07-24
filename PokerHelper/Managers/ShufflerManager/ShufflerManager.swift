@@ -8,9 +8,16 @@
 import Foundation
 
 // MARK: - Protocols
-
+protocol ShufflerManagerDealerGameModuleModelInput {
+    
+}
 
 // MARK: - ShufflerManager
 final class ShufflerManager {
+    
+}
+
+// MARK: - ShufflerManagerDealerGameModuleModelInput
+extension ShufflerManager: ShufflerManagerDealerGameModuleModelInput {
     
 }

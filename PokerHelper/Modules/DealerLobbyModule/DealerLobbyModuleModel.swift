@@ -14,7 +14,10 @@ protocol DealerLobbyModuleModelPresenterInput: AnyObject {
 
 // MARK: - DealerLobbyModuleModel
 final class DealerLobbyModuleModel {
-    
+    // MARK: - Properties
+    weak var presenter: DealerLobbyModulePresenterModelInput?
+    var dataManager: DataManagerDealerLobbyModuleModelInput?
+    var connectionManager: ConnectionManagerDealerLobbyModuleModelInput?
 }
 
 // MARK: - DealerLobbyModuleModelPresenterInput
